@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B-SUV buying decision · Dubai · v5</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{--bg:#fafaf7;--surface:#fff;--ink:#1a1a1a;--ink-soft:#5a5a5a;--ink-mute:#888;--border:#e5e5e0;--green:#1d9e75;--green-soft:#e1f5ee;--red:#a32d2d;--red-soft:#fcebeb;--amber-soft:#faeeda;--amber-ink:#854f0b;--blue:#378add;--purple:#5b3da8;--purple-soft:#e9e1f8}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:48px 24px}
+.eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-mute);margin:0 0 8px}
+h1{font-size:36px;line-height:1.15;margin:0 0 12px;font-weight:600;letter-spacing:-0.5px}
+h2{font-size:22px;margin:48px 0 16px;font-weight:600;letter-spacing:-0.3px}
+h3{font-size:17px;margin:24px 0 10px;font-weight:600}
+p.lead{font-size:17px;color:var(--ink-soft);max-width:720px;margin:0 0 8px}
+.meta{font-size:13px;color:var(--ink-mute)}
+.v5{display:inline-block;background:#1a1a1a;color:#fff;font-size:11px;letter-spacing:1px;padding:3px 8px;border-radius:3px;font-weight:600;vertical-align:middle;margin-left:6px}
+.v4link{display:inline-block;background:var(--amber-soft);color:var(--amber-ink);font-size:11px;letter-spacing:0.5px;padding:3px 8px;border-radius:3px;font-weight:500;vertical-align:middle;margin-left:6px;text-decoration:none}
+.v4link:hover{opacity:.85}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:32px 0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px}
+.stat .lbl{font-size:12px;color:var(--ink-mute);margin-bottom:6px}
+.stat .val{font-size:24px;font-weight:600;letter-spacing:-0.3px}
+.stat .sub{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.stat.win{background:var(--green-soft)} .stat.win .val{color:var(--green)}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--ink-soft);margin:8px 0 16px}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;height:820px;position:relative}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
+.pill{padding:6px 14px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:13px;cursor:pointer;color:var(--ink-soft);transition:all .15s}
+.pill:hover{border-color:#888}
+.pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.card.winner{border:2px solid var(--green)}
+.badge-row{position:absolute;top:12px;right:12px;display:flex;gap:6px;z-index:2;flex-wrap:wrap;justify-content:flex-end;max-width:65%}
+.b{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 9px;border-radius:4px}
+.b.win{background:var(--green);color:#fff}
+.b.buy{background:var(--green-soft);color:var(--green)}
+.b.flag{background:var(--amber-soft);color:var(--amber-ink)}
+.b.avoid-pill{background:var(--red-soft);color:var(--red)}
+.b.owner{background:var(--purple-soft);color:var(--purple)}
+.b.cpo{background:#dde7fa;color:#1f56b0}
+.b.dealer{background:#f0f0ed;color:#666}
+.photo{height:180px;background:#f0eee8;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);overflow:hidden;position:relative}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo svg{width:78%;height:auto;max-height:140px}
+.card-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.rank{font-size:12px;color:var(--ink-mute);font-weight:500}
+.name{font-size:17px;font-weight:600;margin:4px 0 2px;letter-spacing:-0.2px;line-height:1.3}
+.specs{font-size:13px;color:var(--ink-soft);margin-bottom:12px}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;padding-top:10px;border-top:1px dashed var(--border)}
+.price-lbl{font-size:12px;color:var(--ink-mute)}
+.price-val{font-size:18px;font-weight:600}
+.tco-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.tco-lbl{font-size:12px;color:var(--ink-mute)}
+.tco-val{font-size:13px;font-weight:600;color:var(--ink-soft);text-align:right}
+.dep-line{font-size:12px;color:var(--ink-mute);margin-bottom:8px}
+.dep-line strong{color:var(--ink-soft);font-weight:600}
+.desc{font-size:13px;color:var(--ink-soft);line-height:1.5;margin-bottom:14px;flex:1}
+.cta{display:inline-block;text-align:center;padding:9px 14px;background:var(--ink);color:#fff;text-decoration:none;border-radius:8px;font-size:13px;font-weight:500}
+.cta:hover{opacity:.85}
+details{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-top:14px}
+details summary{cursor:pointer;font-weight:500;font-size:15px;list-style:none}
+details summary::after{content:'+';float:right;font-size:20px;color:var(--ink-mute)}
+details[open] summary::after{content:'−'}
+details ul{margin:14px 0 0;padding-left:20px;color:var(--ink-soft);font-size:14px}
+details li{margin-bottom:10px;line-height:1.55}
+details li strong{color:var(--ink);font-weight:600}
+details table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+details table th{background:#f5f4ee;font-weight:600;text-align:left;padding:8px;border-bottom:1px solid var(--border)}
+details table td{padding:8px;border-bottom:1px solid var(--border);color:var(--ink-soft)}
+details table td:last-child,details table th:last-child{text-align:right}
+.insight{background:#f0f4fa;border-left:3px solid var(--blue);padding:18px 22px;border-radius:8px;margin:20px 0}
+.insight p{margin:0 0 6px} .insight p:last-child{margin-bottom:0}
+.insight .ttl{font-weight:600;color:#0c447c;margin-bottom:8px;font-size:14px}
+.warn{background:var(--red-soft);border-left:3px solid var(--red);padding:14px 20px;border-radius:8px;margin:16px 0;font-size:14px}
+.warn .ttl{font-weight:600;color:var(--red);margin-bottom:6px}
+.nego{background:#1a1a1a;color:#f0f0f0;border-radius:12px;padding:24px;margin:20px 0;font-family:'SF Mono',Monaco,monospace;font-size:13px;line-height:1.65;white-space:pre-wrap}
+.changelog{background:#fff8e7;border:1px solid #f0d878;border-radius:8px;padding:16px 22px;margin:20px 0;font-size:14px}
+.changelog .ttl{font-weight:600;margin-bottom:8px;color:var(--amber-ink)}
+.changelog ul{margin:0;padding-left:20px;color:var(--ink-soft)}
+.changelog li{margin-bottom:6px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--ink-mute)}
+@media (max-width:720px){.wrap{padding:32px 16px}h1{font-size:28px}.stats{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.chart-box{height:980px;padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<p class="eyebrow">B-SUV buying analysis · Dubai · May 2026 <span class="v5">v5 · 55-60k tier</span><a class="v4link" href="https://bsuv-tco-dubai-production.up.railway.app" target="_blank">← v4 (45-55k tier) still live</a></p>
+<h1>HR-V vs Corolla Cross · plus the wider 55-60k field</h1>
+<p class="lead">The buyer narrowed his preference to Honda HR-V and Toyota Corolla Cross. Round 4 ran a 9-agent Kimi swarm + a Perplexity citation-backed market intel report + a Manus agentic browser sweep. Result: 16 specific candidates, validated depreciation rates, and one clear winner.</p>
+<p class="meta">Hold: 3 years · 15,000 km/year · Dubai · Salik excluded · Verified May 2026 · Depreciation rates updated from Kimi's UAE deep-dive (validated against actual Dubizzle/DubiCars/YallaMotor asking prices)</p>
+</header>
+
+<div class="changelog">
+<div class="ttl">v5 — what changed since v4</div>
+<ul>
+<li><strong>Budget shifted up to AED 55-60k.</strong> The new tier opens up newer model years (2022-2024) and proper trims (HR-V EX, Corolla Cross XLE) but is also a "supply desert" — owner inventory in this band is unusually thin because dealers dominate above AED 50k.</li>
+<li><strong>Depreciation rates validated against real UAE asking-price data.</strong> Kimi's deep-dive analyzed 5-15 listings per model-year-bucket across DubiCars/Dubizzle/YallaMotor. The big shift: <strong>Toyota Corolla Cross 3-year depreciation is 16% (not 27%)</strong>. HR-V is 23%. Toyota RAV4 is the segment champion at 15%. Nissan Kicks is the worst Japanese depreciator at 34%.</li>
+<li><strong>Al-Futtaim certified pre-owned HR-Vs added.</strong> Manus surfaced 3 in-band CPO units at AED 59,990 with 3-year dealer warranty. The 2020 LX with only 27,843 km is the standout — best CPO HR-V option in band.</li>
+<li><strong>The single best deal is still Round 3's Corolla Cross XLE at AED 54k from WALEED HASSAN.</strong> Kept as carryover (technically AED 1k below band but recognized as the #1 mathematical pick across all four rounds).</li>
+<li><strong>HR-V owner inventory in the 55-60k band is essentially empty.</strong> One flagged listing (7k km is suspiciously low). The realistic HR-V path is Al-Futtaim CPO at AED 59,990 or stretching to AED 69k for the Maria Chekli EX SPORT 2022.</li>
+</ul>
+</div>
+
+<div class="stats">
+<div class="stat win"><div class="lbl">Cheapest to own</div><div class="val">AED 30,714</div><div class="sub">Toyota Corolla Cross XLE 2023 @ 54k · WALEED HASSAN</div></div>
+<div class="stat"><div class="lbl">Best HR-V option</div><div class="val">AED 39,289</div><div class="sub">Al-Futtaim CPO 2021 LX, 57k km, 3yr warranty</div></div>
+<div class="stat"><div class="lbl">Spread across 16 cars</div><div class="val">AED 18,859</div><div class="sub">Picking right vs wrong = AED 6,300/year</div></div>
+</div>
+
+<h2>Three-year cost breakdown</h2>
+<p class="meta" style="margin-bottom:14px">Each bar = one specific listing. Length = total cost over 3 years. Orange = depreciation = the silent killer. Notice how the Corolla Cross has dramatically less orange thanks to Toyota's 84% 3-year residual.</p>
+<div class="legend">
+<span><i style="background:#d85a30"></i>Money lost (depreciation)</span>
+<span><i style="background:#378add"></i>Petrol</span>
+<span><i style="background:#ef9f27"></i>Insurance + reg</span>
+<span><i style="background:#7f77dd"></i>Servicing + battery</span>
+</div>
+<div class="chart-box"><canvas id="tcoChart"></canvas></div>
+
+<div class="insight">
+<p class="ttl">Why the Corolla Cross XLE dominates the math</p>
+<p>The depreciation deep-dive validated Toyota Corolla Cross at 84% 3-year residual — the strongest of any B/C-SUV in the dataset after the RAV4. At an AED 54k entry price, that's AED 8,640 in lost value over 3 years vs AED 13,800 for an HR-V at AED 60k (23% deprec) or AED 21,000 for a Haval at AED 60k (35% deprec).</p>
+<p>The HR-V isn't a bad pick — it's just that Corolla Cross genuinely retains more value in UAE because Filipino expat demand for used Toyotas is exceptional. Both are reliable. Both have parts availability. The math just slightly favors the Toyota.</p>
+</div>
+
+<div class="warn">
+<div class="ttl">Salik is not on this chart — and that's deliberate</div>
+A Dubai business owner pays roughly AED 5,000/year in Salik. That's identical regardless of which car you buy, so it doesn't change the ranking. Add AED 416/month to every "AED/month" figure for the all-in monthly cost.
+</div>
+
+<h2>The 16 specific candidates</h2>
+<p class="meta" style="margin-bottom:14px">Sorted by 3-year cost of ownership. Click any card to open the live listing.</p>
+
+<div class="filter-row">
+<button class="pill active" data-filter="all">All 16</button>
+<button class="pill" data-filter="HRV">Honda HR-V (5)</button>
+<button class="pill" data-filter="CC">Corolla Cross (1)</button>
+<button class="pill" data-filter="BUY">BUY only</button>
+<button class="pill" data-filter="Owner">Owner-listed</button>
+<button class="pill" data-filter="CPO">Al-Futtaim CPO</button>
+<button class="pill" data-filter="Dubai">Dubai only</button>
+</div>
+
+<div class="grid" id="cards"></div>
+
+<h2>Depreciation deep-dive — what Kimi validated</h2>
+<p class="meta" style="margin-bottom:14px">Pulled from 5-15 same-model listings per year-of-manufacture bucket across DubiCars, Dubizzle, YallaMotor and Kavak in May 2026. Computed against original new MSRP from manufacturer archives.</p>
+
+<details>
+<summary>Per-model 3-year residuals validated against actual UAE asking prices</summary>
+<table>
+<tr><th>Model</th><th>Segment</th><th>3-year residual</th><th>Implied deprec</th><th>Sample</th><th>Confidence</th></tr>
+<tr><td><strong>Toyota RAV4</strong></td><td>Japanese C-SUV</td><td>~95%*</td><td>~5%</td><td>15 listings</td><td>HIGH</td></tr>
+<tr><td><strong>Toyota Corolla Cross</strong></td><td>Japanese B-SUV</td><td>84%</td><td>16%</td><td>10 listings</td><td>HIGH</td></tr>
+<tr><td>Honda CR-V</td><td>Japanese C-SUV</td><td>84%</td><td>16%</td><td>10 listings</td><td>HIGH</td></tr>
+<tr><td><strong>Honda HR-V</strong></td><td>Japanese B-SUV</td><td>77%</td><td>23%</td><td>8 listings</td><td>MEDIUM</td></tr>
+<tr><td>Mazda CX-5</td><td>Japanese C-SUV</td><td>74%</td><td>26%</td><td>10 listings</td><td>HIGH</td></tr>
+<tr><td>Chery Tiggo 7 Pro</td><td>Chinese C-SUV</td><td>72%</td><td>28%</td><td>5 listings</td><td>LOW</td></tr>
+<tr><td>Toyota Raize</td><td>Japanese B-SUV</td><td>70%</td><td>30%</td><td>10 listings</td><td>HIGH</td></tr>
+<tr><td>MG HS</td><td>Chinese C-SUV</td><td>68%</td><td>32%</td><td>9 listings</td><td>MEDIUM</td></tr>
+<tr><td>Nissan Kicks</td><td>Japanese B-SUV</td><td>66%</td><td>34%</td><td>10 listings</td><td>HIGH</td></tr>
+<tr><td>Haval Jolion / H6</td><td>Chinese B/C-SUV</td><td>~65%</td><td>35%</td><td>est.</td><td>MEDIUM</td></tr>
+</table>
+<p style="margin-top:14px;font-size:13px;color:var(--ink-mute)"><strong>Key insight:</strong> Japanese C-SUVs (RAV4, CR-V, Corolla Cross) hold value 8-15 percentage points better than Japanese B-SUVs (HR-V, Kicks, Raize). Chinese brands depreciate 10-15 points faster than Japanese equivalents by year 4. *RAV4 spike capped at 95% — actual 2022 low-km units sometimes sell above original MSRP due to supply constraints.</p>
+</details>
+
+<details>
+<summary>What the data says about HR-V specifically (the buyer's #1 preference)</summary>
+<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">HR-V depreciation is HIGHER than Corolla Cross by 7 percentage points over 3 years. Kimi's HR-V table:</p>
+<table>
+<tr><th>Year</th><th>New MSRP</th><th>2026 asking</th><th>Residual</th><th>Sample</th></tr>
+<tr><td>2018 (8yr)</td><td>69,900</td><td>34,000</td><td>49%</td><td>5</td></tr>
+<tr><td>2019 (7yr)</td><td>69,000</td><td>37,500</td><td>54%</td><td>6</td></tr>
+<tr><td>2020 (6yr)</td><td>64,000</td><td>38,000</td><td>59%</td><td>7</td></tr>
+<tr><td>2021 (5yr)</td><td>69,900</td><td>51,000</td><td>73%</td><td>8</td></tr>
+<tr><td>2023 (3yr)</td><td>94,900</td><td>73,500</td><td>77%</td><td>6</td></tr>
+</table>
+<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">The 2022 model straddles old (1.8L) and new (1.5L) generations and shows artificially high residual. Cleaner signal: 2023 at 77.4% (3yr) and 2021 at 73% (5yr). Use 23% for 3-year HR-V depreciation in TCO model.</p>
+</details>
+
+<h2>Negotiation cheat sheets — HR-V and Corolla Cross specifically</h2>
+
+<details>
+<summary>Honda HR-V negotiation strategy (from Manus mission 5)</summary>
+<table>
+<tr><th>Scenario</th><th>Target offer</th><th>Walk-away</th></tr>
+<tr><td>2022 EX, &lt;50k km, clean</td><td>AED 52,000</td><td>AED 56,000</td></tr>
+<tr><td>2022 EX, 50-80k km</td><td>AED 48,000</td><td>AED 53,000</td></tr>
+<tr><td>2021 LX, &lt;60k km</td><td>AED 44,000</td><td>AED 48,000</td></tr>
+<tr><td>2021 EX, &lt;60k km</td><td>AED 48,000</td><td>AED 53,000</td></tr>
+<tr><td>Al-Futtaim CPO 2020-2021 @ 59,990</td><td>AED 56,000</td><td>AED 58,500 (CPO premium worth 2-3k)</td></tr>
+</table>
+<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><strong>Leverage points specific to HR-V:</strong> CVT shudder is a known issue at 80k+ km — ask explicitly. Fuel pump recall NHTSA 23V858000 worth AED 500-1,000 leverage if not performed. Summer (May-August) timing reduces dealer footfall — use it. Honda's 3-year/100k km warranty does not transfer to second owner — only Al-Futtaim CPO has transferable warranty.</p>
+</details>
+
+<details>
+<summary>Toyota Corolla Cross negotiation strategy</summary>
+<p style="font-size:13px;color:var(--ink-soft);margin:12px 0">Corolla Cross owner inventory is essentially empty in band. The realistic targets:</p>
+<ul>
+<li><strong>WALEED HASSAN's XLE 2023 at AED 54k (Round 3 carryover)</strong> — anchor at AED 49,000 cash close in 48hr. Walk-away: AED 52,000. This listing is the cleanest single owner-listed Corolla Cross in the entire dataset and survives multiple rounds of red-team review.</li>
+<li><strong>Al-Futtaim Toyota Pre-owned</strong> — cheapest certified Corolla Cross is AED 67,995 (2021, 112k km). Above band. Skip unless willing to stretch.</li>
+<li><strong>2024 L base trim @ AED 63k</strong> — base trim with 59k km is borderline fleet history. Anchor at AED 58,000 cash. Walk-away AED 60,000.</li>
+</ul>
+</details>
+
+<details>
+<summary>Telegram negotiation opener (use this verbatim)</summary>
+<div class="nego">Hi, interested in the [Make Model Year] you've listed at AED [price].
+
+I'm a cash buyer, RTA-ready, can close this weekend. Before I view, can you share:
+
+1. RTA full vehicle history report — accidents, ownership, registration class
+2. Service history — last service date, km, and which workshop  
+3. CVT/transmission fluid change record (if applicable)
+4. Comprehensive insurance quote in your name — to confirm no hidden claims
+
+Subject to physical inspection, my offer: AED [ask minus 8-12%] cash, all transfer fees on me, close within 48 hours.
+
+If RTA confirms no accidents/police holds and the inspection is clean, I'm ready to book.
+
+Let me know.</div>
+</details>
+
+<h2>RTA verification workflow — do this before paying anything</h2>
+
+<details>
+<summary>Step-by-step RTA mileage history check (from Manus mission 6)</summary>
+<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><strong>The single most important verification step.</strong> Sellers can clock odometers but RTA-stored mileage from past inspection visits is hard to fake.</p>
+<ul>
+<li><strong>Method 1 — RTA Vehicle Status Certificate via Dubai Drive app or rta.ae</strong> (AED 50). Login with UAE Pass → Vehicle Services → Status Certificate → Enter VIN or plate number. Reveals ownership history, accident records, technical inspection history, mileage at each inspection, legal status (fines/holds/mortgage).</li>
+<li><strong>Method 2 — Dubai Police app</strong>: outstanding fines and accident reports tied to the plate</li>
+<li><strong>Method 3 — Mahboob app</strong>: secondary cross-check</li>
+<li><strong>Pre-purchase inspection (PPI)</strong>: budget AED 400-800. Recommended providers: Dynatrade (multi-location, AED 500-800, 200+ point inspection), Max Garage (Al Quoz, AED 400-600), Dubizzle Inspection (mobile, AED 299-499), CAFU (mobile, AED 350-500).</li>
+<li><strong>For HR-V specifically</strong>: verify CVT fluid condition, fuel pump recall NHTSA 23V858000 status, AC compressor under UAE heat stress, suspension bushings.</li>
+<li><strong>For Corolla Cross Hybrid specifically</strong>: hybrid battery State of Health (SOH) %, 12V auxiliary battery, brake system recall on 2023-2024 models, roof rail mounting points (known loosening issue).</li>
+</ul>
+</details>
+
+<details>
+<summary>Red flags that mean walk away (8 trader trap patterns)</summary>
+<ul>
+<li><strong>Sub-10k km/year on a 5+ year old car</strong> — likely odometer rolled back. Dubai drives 18-20k/year average.</li>
+<li><strong>50k+ km/year on a young car</strong> — ex-rental fleet hidden in dealer listing. 30-40% of Cars24/Dubicars dealer inventory is former rental.</li>
+<li><strong>"GCC spec" claim with no VIN region code shown</strong> — could be US-spec priced as GCC. US-spec trades 10-15% below GCC.</li>
+<li><strong>"Low mileage" claim contradicting actual numbers</strong> — dishonest seller pattern.</li>
+<li><strong>Cosmetics over mechanicals</strong> — "new tyres, LED headlights" on 140k+ km car = AED 2k of cosmetics dodging AED 8k of mechanical work.</li>
+<li><strong>160k+ km priced like 60k km</strong> — common Mazda CX-3 timing chain trap. Chain stretches at 100-120k km.</li>
+<li><strong>Geely Coolray DCT</strong> — wet 7-speed DCT fails at 40k+ km. Replacement AED 8-12k.</li>
+<li><strong>JAC = resale poison</strong> — weakest UAE network, AED 32k JAC today is AED 12k in 24 months.</li>
+</ul>
+</details>
+
+<footer>
+<p>Method: 3yr TCO = price − resale + 3 × (fuel + ins + reg + service) + battery (Chinese only). Insurance escalates 3% Y2, 6% Y3. Depreciation rates validated against UAE asking-price data from DubiCars, Dubizzle, YallaMotor, Kavak (May 2026). UAE Fuel Price Committee Special 95 = AED 3.55/L (May 2026). Salik excluded — same overhead per car (~AED 5,000/year for Dubai business owner).</p>
+<p>Round 4 methodology: 9-agent Kimi swarm (market scout × 2 priority models, similar cars scout, spec/trim decoder, TCO compiler with depreciation validation, description forensics, reliability cross-check, critical trader red team, depreciation deep-dive Agent 9) + Perplexity 7-query market intelligence with citations + Manus 6 agentic workflows (FB Marketplace, WhatsApp/Telegram, Al-Futtaim dealer recon, dealer-yard intel, negotiation cheat sheets, RTA verification workflow). 13 Kimi listings + 3 Manus Al-Futtaim CPO additions = 16 total candidates.</p>
+<p>Previous version: <a href="https://bsuv-tco-dubai-production.up.railway.app">v4 (AED 45-55k tier) is still live</a> for comparison.</p>
+</footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const cars = [
+{
+"name": "Toyota Corolla Cross XLE (2023)",
+"price": 54000,
+"tco": 30714,
+"dep": 8640,
+"fuel": 9585,
+"ins": 7989,
+"svc": 4500,
+"specs": "46,000 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 WALEED HASSAN",
+"desc": "2023 Toyota Corolla Cross XLE - GCC Specs. Well maintained. Accident free. Low mileage. Ready to drive. Contact for viewing.",
+"url": "https://uae.dubizzle.com/motors/used-cars/toyota/corolla-cross/2026/4/29/2023-toyota-corolla-cross-xle-gcc-specs-2-710---d8b4ed26934d49e3bd6edaa8bc3f6533/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/corolla-cross-2023",
+"trader": "BUY",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 16,
+"depConf": "HIGH",
+"isCpo": false,
+"isCarryover": true,
+"winner": true
+},
+{
+"name": "Honda HR-V LX (2023)",
+"price": 61000,
+"tco": 38594,
+"dep": 14030,
+"fuel": 11502,
+"ins": 7062,
+"svc": 6000,
+"specs": "7,000 km \u00b7 GCC \u00b7 Al Ain \u00b7 Owner \u00b7 Halima Baizid",
+"desc": "Honda hrv model 2023. Km 7000 only. Gcc specs. 1.5 engine. As new. Location tawam al ain. Full insurance until September. No finance. No test drive for fun.",
+"url": "https://uae.dubizzle.com/motors/used-cars/honda/hr-v/2026/4/28/as-new-honda-hr-v-7000-km-only-39-592---6eff20c2d9de4c2ba10563dc7198a55d/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/hrv-2021",
+"trader": "FLAG",
+"emirate": "Al Ain",
+"sellerType": "Owner",
+"depPct": 23,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Honda HR-V LX (Al-Futtaim CPO) (2021)",
+"price": 59990,
+"tco": 39289,
+"dep": 13798,
+"fuel": 11502,
+"ins": 7989,
+"svc": 6000,
+"specs": "57,522 km \u00b7 GCC \u00b7 Dubai \u00b7 Al-Futtaim CPO \u00b7 3yr warranty",
+"desc": "Certified pre-owned. 3-year warranty. 0% DP. Newer model year than the 2020 CPO unit but higher km.",
+"url": "https://www.automall.ae/en/used-cars-shop/honda/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/hrv-2021",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Certified dealer (Honda CPO)",
+"depPct": 23,
+"depConf": "MEDIUM",
+"isCpo": true,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Honda HR-V LX (Al-Futtaim CPO) (2021)",
+"price": 59990,
+"tco": 39289,
+"dep": 13798,
+"fuel": 11502,
+"ins": 7989,
+"svc": 6000,
+"specs": "76,203 km \u00b7 GCC \u00b7 Dubai \u00b7 Al-Futtaim CPO \u00b7 3yr warranty",
+"desc": "Certified pre-owned. 3-year warranty. Highest km of the three in-band CPO units \u2014 only worth considering if extended warranty option is included.",
+"url": "https://www.automall.ae/en/used-cars-shop/honda/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/hrv-2021",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Certified dealer (Honda CPO)",
+"depPct": 23,
+"depConf": "MEDIUM",
+"isCpo": true,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Honda HR-V LX (Al-Futtaim CPO) (2020)",
+"price": 59990,
+"tco": 40216,
+"dep": 13798,
+"fuel": 11502,
+"ins": 8916,
+"svc": 6000,
+"specs": "27,843 km \u00b7 GCC \u00b7 Dubai \u00b7 Al-Futtaim CPO \u00b7 3yr warranty",
+"desc": "Certified pre-owned. Up to 3-year warranty. 0% DP option. Lowest km certified HR-V in band. From Manus mission 3 dealer recon.",
+"url": "https://www.automall.ae/en/used-cars-shop/honda/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/hrv-2021",
+"trader": "BUY",
+"emirate": "Dubai",
+"sellerType": "Certified dealer (Honda CPO)",
+"depPct": 23,
+"depConf": "MEDIUM",
+"isCpo": true,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Honda CR-V LX (2019)",
+"price": 57000,
+"tco": 41215,
+"dep": 9120,
+"fuel": 13579,
+"ins": 8916,
+"svc": 9600,
+"specs": "118,993 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Hammad Safeer",
+"desc": "Honda CR-V 2019 2.4L GCC specs in excellent condition. Smooth, reliable, and very comfortable family SUV. Engine: 2.4L, Transmission: Automatic, Mileage: 118,993 km, Exterior: Grey | Interior: Beige, ",
+"url": "https://dubai.dubizzle.com/motors/used-cars/honda/cr-v/2026/4/28/honda-cr-v-2019-24l-gcc-118k-km-excellent--2-025---4ed89466913641bfbd79ae4885fc63d4/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/honda-crv-lx-2019",
+"trader": "FLAG",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 16,
+"depConf": "HIGH",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Nissan X-Trail SV (2020)",
+"price": 52500,
+"tco": 42895,
+"dep": 14700,
+"fuel": 13579,
+"ins": 8916,
+"svc": 5700,
+"specs": "65,300 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Mufid Ammar Ibrahim Youne",
+"desc": "For sale: Nissan X-Trail SV, model year 2020. GCC specs. Well-maintained and ready to drive. Contact for more details.",
+"url": "https://dubai.dubizzle.com/motors/used-cars/nissan/x-trail/2026/4/30/nissan-x-trail-sv-2020-gcc-specs-4x4-2-464---48d59d8c05c046e59ae86d548094dc77/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/nissan-xtrail-sv-2020",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 28,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Nissan X-Trail SV (2022)",
+"price": 54000,
+"tco": 43315,
+"dep": 15120,
+"fuel": 13579,
+"ins": 8916,
+"svc": 5700,
+"specs": "56,000 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Sanjaygouda Patil",
+"desc": "NISSAN XTRAIL 2.5 7 SEATER # 2022 GCC # ACCIDENT FREE AND WELL MAINTAINED CAR FOR SALE AED 54000. With BLUETOOTH, PARKING SENSOR, CRUISE CONTROL, ALLOY WHEELS, NAVIGATION, REVERSE CAMERA, CAR PLAY, AP",
+"url": "https://dubai.dubizzle.com/motors/used-cars/nissan/x-trail/2026/4/17/nissan-xtrail-25-7-seater-2022-gcc-acciden-2-189---f8332e9cde5d44bc8b6141f3eab4e43b/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/nissan-xtrail-sv-2022",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 28,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Honda HR-V EX SPORT (2022)",
+"price": 69000,
+"tco": 43340,
+"dep": 15870,
+"fuel": 11981,
+"ins": 7989,
+"svc": 7500,
+"specs": "39,800 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Maria Chekli",
+"desc": "Honda hrv model 2022. Excellent condition. Gcc specs. Ex sport. Platinum white pearl. With panoramic roof. Leather seats. 39,800 km. All service at honda.",
+"url": "https://dubai.dubizzle.com/motors/used-cars/honda/hr-v/2026/4/15/honda-hr-v-ex-2022-gcc-specs-excellent-con-2-964---2840337b505b46bb9deaf9975d02799a/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/hrv-2021",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 23,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Mazda CX-5 GL (2020)",
+"price": 45000,
+"tco": 43596,
+"dep": 11700,
+"fuel": 12780,
+"ins": 8916,
+"svc": 10200,
+"specs": "148,000 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Dina Ibrahim",
+"desc": "Well-maintained 2020 Mazda CX-5 GL with GCC specifications for sale. New tayer,new battery, ladies used,reason for sale leaving Dubia",
+"url": "https://dubai.dubizzle.com/motors/used-cars/mazda/cx-5/2026/4/13/gcc-specs-mazda-cx-5-gl-2020-2-235---2d323f24dee04e9b8ec842bac40e8e9e/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/mazda-cx5-gl-2020",
+"trader": "AVOID",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 26,
+"depConf": "HIGH",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Mitsubishi Eclipse Cross GL (2024)",
+"price": 60000,
+"tco": 44270,
+"dep": 19200,
+"fuel": 11981,
+"ins": 7989,
+"svc": 5100,
+"specs": "23,000 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Edgar Gabriel da Silva",
+"desc": "Get the Mitsubishi Eclipse Cross 2024 with a very low mileage, under a maintenance service applied very recently by Al Futtaim Auto Center company. Double car keys available. Very good condition.",
+"url": "https://dubai.dubizzle.com/motors/used-cars/mitsubishi/eclipsecross/2026/4/3/mitsubishi-eclipse-cross-2024-2-587---8b5f5c9a24414f8d97ee91fb2cc18667/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/mitsubishi-eclipse-cross-2024",
+"trader": "BUY",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 32,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Chery Tiggo 7 Pro I4 1.5L (2024)",
+"price": 63000,
+"tco": 45764,
+"dep": 17640,
+"fuel": 11981,
+"ins": 9843,
+"svc": 6300,
+"specs": "16,800 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Individual seller (CarSwi",
+"desc": "CarSwitch states this is 'uploaded by individual sellers'. Price AED 63,000, 16,800 km, 2024 model. Only 1 Chery Tiggo 7 Pro available on CarSwitch UAE.",
+"url": "https://carswitch.com/uae/used-cars/chery/tiggo-7-pro",
+"photo": "",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 28,
+"depConf": "LOW",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "MG HS 30T (2023)",
+"price": 54000,
+"tco": 46203,
+"dep": 17280,
+"fuel": 12780,
+"ins": 9843,
+"svc": 6300,
+"specs": "13,500 km \u00b7 GCC \u00b7 Abu Dhabi \u00b7 Owner \u00b7 Not disclosed - owner lis",
+"desc": "MG HS 30T - 2023 Model (GCC Spec Orginal paint AED 54,000 055 739 9600 HS 30T 13,500 km only 2.0L Petrol Turbo Color Red Black & White Non-accidented car. Features: Rear View Camera, Cruise Control, L",
+"url": "https://uae.yallamotor.com/used-cars/abu-dhabi/mg/hs/yr_2023_2023",
+"photo": "",
+"trader": "BUY",
+"emirate": "Abu Dhabi",
+"sellerType": "Owner",
+"depPct": 32,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Haval Jolion 1.5T Top (2023)",
+"price": 55000,
+"tco": 47374,
+"dep": 19250,
+"fuel": 11981,
+"ins": 9843,
+"svc": 6300,
+"specs": "26,700 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Not disclosed - owner lis",
+"desc": "One owner, lady driver. Full option, perfect as a brand new car. Full service history of the Haval Jolion 2023 1.5T Top is available. Never had any issues. Gulf specs model. Still under warranty by th",
+"url": "https://uae.yallamotor.com/used-cars/haval/jolion/2023/used-haval-jolion-2023-dubai-1767617",
+"photo": "",
+"trader": "BUY",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 35,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Haval Jolion 1.5T Top (2022)",
+"price": 59500,
+"tco": 48949,
+"dep": 20825,
+"fuel": 11981,
+"ins": 9843,
+"svc": 6300,
+"specs": "27,500 km \u00b7 GCC \u00b7 Ajman \u00b7 Owner \u00b7 Not disclosed - owner lis",
+"desc": "2022 Haval top model with ADAS, full sunroof, leather, etc. Full service done in agency only 27000kms done. Warranty remaining for 123000kms or 2 years. Please contact. 0565209296. No offers please, o",
+"url": "https://uae.yallamotor.com/used-cars/haval/jolion/2022/used-haval-jolion-2022-ajman-1665991",
+"photo": "",
+"trader": "BUY",
+"emirate": "Ajman",
+"sellerType": "Owner",
+"depPct": 35,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+},
+{
+"name": "Haval H6 GT (2023)",
+"price": 59000,
+"tco": 49573,
+"dep": 20650,
+"fuel": 12780,
+"ins": 9843,
+"svc": 6300,
+"specs": "78,000 km \u00b7 GCC \u00b7 Dubai \u00b7 Owner \u00b7 Khaled Ismail",
+"desc": "An Amazing Haval H6 GT is for Sale. 77,000 km. Top of the Range. Panoramic Sunroof. Adaptive Cruise Control. 360 Surround Camera View. CarPlay. Xenon Lights with LED.",
+"url": "https://uae.dubizzle.com/motors/used-cars/haval/h6/2026/2/1/2023-haval-h6-gt-in-excellent-condition-2-971---1e2f5ac1879d48b6af7c4d368cdf605e/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/haval-h6-gt-2023",
+"trader": "NEUTRAL",
+"emirate": "Dubai",
+"sellerType": "Owner",
+"depPct": 35,
+"depConf": "MEDIUM",
+"isCpo": false,
+"isCarryover": false,
+"winner": false
+}
+];
+
+const suvSvg = (color) => `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 25 75 L 25 60 Q 25 50 35 48 L 55 44 Q 60 30 75 28 L 130 28 Q 145 30 152 44 L 172 48 Q 178 50 178 60 L 178 75 Z" fill="${color}" stroke="#888" stroke-width="1.2"/><path d="M 60 44 L 73 32 L 100 32 L 100 44 Z M 100 44 L 100 32 L 130 32 L 142 44 Z" fill="#a8c8e8" stroke="#888" stroke-width="0.8"/><line x1="100" y1="32" x2="100" y2="44" stroke="#888" stroke-width="0.8"/><circle cx="58" cy="78" r="11" fill="#1a1a1a"/><circle cx="58" cy="78" r="5" fill="#444"/><circle cx="148" cy="78" r="11" fill="#1a1a1a"/><circle cx="148" cy="78" r="5" fill="#444"/><rect x="170" y="56" width="6" height="6" rx="1" fill="#fbb"/><rect x="26" y="56" width="6" height="6" rx="1" fill="#ffeb84"/></svg>`;
+
+const grid = document.getElementById('cards');
+function renderCards(filter='all') {
+  grid.innerHTML = '';
+  const filtered = cars.filter(c => {
+    if (filter === 'all') return true;
+    if (filter === 'HRV') return c.name.includes('HR-V');
+    if (filter === 'CC') return c.name.includes('Corolla Cross');
+    if (filter === 'BUY') return c.trader === 'BUY';
+    if (filter === 'Owner') return c.sellerType === 'Owner';
+    if (filter === 'CPO') return c.isCpo;
+    if (filter === 'Dubai') return c.emirate === 'Dubai';
+    return true;
+  });
+  filtered.forEach((c) => {
+    const card = document.createElement('div');
+    let cls = 'card';
+    if (c.winner) cls += ' winner';
+    card.className = cls;
+    let badges = '';
+    if (c.winner) badges += '<span class="b win">Best deal</span>';
+    if (c.trader === 'BUY' && !c.winner) badges += '<span class="b buy">Buy</span>';
+    if (c.trader === 'NEUTRAL') badges += '<span class="b flag">Neutral</span>';
+    if (c.trader === 'FLAG') badges += '<span class="b flag">Flag</span>';
+    if (c.trader === 'AVOID') badges += '<span class="b avoid-pill">Avoid</span>';
+    if (c.isCpo) badges += '<span class="b cpo">CPO</span>';
+    else if (c.sellerType === 'Owner') badges += '<span class="b owner">Owner</span>';
+    
+    const photo = c.photo ? `<img src="${c.photo}" alt="${c.name}" loading="lazy">` : suvSvg('#cccccc');
+    const realRank = cars.indexOf(c) + 1;
+    
+    card.innerHTML = `
+      <div class="badge-row">${badges}</div>
+      <div class="photo">${photo}</div>
+      <div class="card-body">
+        <div class="rank">#${realRank} of ${cars.length} overall</div>
+        <div class="name">${c.name}</div>
+        <div class="specs">${c.specs}</div>
+        <div class="price-row"><span class="price-lbl">Asking</span><span class="price-val">AED ${c.price.toLocaleString()}</span></div>
+        <div class="tco-row"><span class="tco-lbl">3-year cost of ownership</span><span class="tco-val">AED ${c.tco.toLocaleString()}<br><span style="color:var(--ink-mute);font-weight:400">AED ${Math.round(c.tco/36).toLocaleString()}/mo</span></span></div>
+        <div class="dep-line">Depreciation: <strong>${c.depPct}%</strong> over 3yr (${c.depConf} confidence)</div>
+        <p class="desc">${c.desc}</p>
+        <a class="cta" href="${c.url}" target="_blank" rel="noopener noreferrer">View this listing →</a>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+renderCards();
+
+document.querySelectorAll('.pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    renderCards(p.dataset.filter);
+  });
+});
+
+new Chart(document.getElementById('tcoChart'), {
+  type: 'bar',
+  data: {
+    labels: cars.map(c => [c.name.replace(/ \(.+\)/, ''), `AED ${c.tco.toLocaleString()} · ${c.trader}`]),
+    datasets: [
+      {label: 'Money lost (depreciation)', data: cars.map(c => c.dep), backgroundColor: '#d85a30'},
+      {label: 'Petrol over 3 years', data: cars.map(c => c.fuel), backgroundColor: '#378add'},
+      {label: 'Insurance + reg (3yr)', data: cars.map(c => c.ins), backgroundColor: '#ef9f27'},
+      {label: 'Servicing + battery', data: cars.map(c => c.svc), backgroundColor: '#7f77dd'}
+    ]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    layout: {padding: {right: 20}},
+    scales: {
+      x: {stacked: true, beginAtZero: true, ticks: {callback: v => 'AED ' + (v/1000) + 'k', font: {size: 11}, color: '#888'}, grid: {color: 'rgba(0,0,0,0.05)'}},
+      y: {stacked: true, ticks: {font: {size: 10}, color: '#1a1a1a'}, grid: {display: false}}
+    },
+    plugins: {legend: {display: false}, tooltip: {callbacks: {label: ctx => ctx.dataset.label + ': AED ' + ctx.parsed.x.toLocaleString()}}}
+  }
+});
+</script>
+</body>
+</html>
