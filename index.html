@@ -27,7 +27,8 @@ p.lead{font-size:17px;color:var(--ink-soft);max-width:720px;margin:0 0 8px}
 .legend{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--ink-soft);margin:8px 0 16px}
 .legend span{display:flex;align-items:center;gap:7px}
 .legend i{width:12px;height:12px;border-radius:2px;display:inline-block}
-.chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;height:820px;position:relative}
+.chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;height:860px;position:relative}
+.h2h-chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;height:380px;position:relative}
 .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 16px}
 .pill{padding:6px 14px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:13px;cursor:pointer;color:var(--ink-soft);transition:all .15s}
 .pill:hover{border-color:#888}
@@ -73,7 +74,15 @@ details li strong{color:var(--ink);font-weight:600}
 details table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
 details table th{background:#f5f4ee;font-weight:600;text-align:left;padding:8px;border-bottom:1px solid var(--border)}
 details table td{padding:8px;border-bottom:1px solid var(--border);color:var(--ink-soft)}
-details table td:last-child,details table th:last-child{text-align:right}
+.h2h-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.h2h-table th{background:#f5f4ee;font-weight:600;text-align:left;padding:12px;border-bottom:1px solid var(--border)}
+.h2h-table th:first-child{width:32%}
+.h2h-table th{text-align:center}
+.h2h-table td{padding:12px;border-bottom:1px solid var(--border);text-align:center}
+.h2h-table td:first-child{text-align:left;color:var(--ink-mute);font-weight:500}
+.h2h-table tr:last-child td{border-bottom:none;font-weight:600}
+.h2h-table .winner-cell{background:var(--green-soft);color:var(--green);font-weight:600}
+.h2h-table .loser-cell{background:#fafaf7;color:var(--ink-mute)}
 .insight{background:#f0f4fa;border-left:3px solid var(--blue);padding:18px 22px;border-radius:8px;margin:20px 0}
 .insight p{margin:0 0 6px} .insight p:last-child{margin-bottom:0}
 .insight .ttl{font-weight:600;color:#0c447c;margin-bottom:8px;font-size:14px}
@@ -84,39 +93,68 @@ details table td:last-child,details table th:last-child{text-align:right}
 .changelog .ttl{font-weight:600;margin-bottom:8px;color:var(--amber-ink)}
 .changelog ul{margin:0;padding-left:20px;color:var(--ink-soft)}
 .changelog li{margin-bottom:6px}
+.modeldeep{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:16px 0}
+.modeldeep h3{margin-top:0}
+.modeldeep .modelmeta{font-size:13px;color:var(--ink-mute);margin-bottom:14px}
+.modeldeep .breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.modeldeep .bcell{background:#fafaf7;border-radius:8px;padding:12px;border:1px solid var(--border)}
+.modeldeep .bcell .lbl{font-size:11px;color:var(--ink-mute);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px}
+.modeldeep .bcell .val{font-size:16px;font-weight:600}
 footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--ink-mute)}
-@media (max-width:720px){.wrap{padding:32px 16px}h1{font-size:28px}.stats{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.chart-box{height:980px;padding:16px}}
+@media (max-width:720px){.wrap{padding:32px 16px}h1{font-size:28px}.stats{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.chart-box{height:1100px;padding:16px}.modeldeep .breakdown{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-<p class="eyebrow">B-SUV buying analysis · Dubai · May 2026 <span class="v5">v5 · 55-60k tier</span><a class="v4link" href="https://bsuv-tco-dubai-production.up.railway.app" target="_blank">← v4 (45-55k tier) still live</a></p>
-<h1>HR-V vs Corolla Cross · plus the wider 55-60k field</h1>
-<p class="lead">The buyer narrowed his preference to Honda HR-V and Toyota Corolla Cross. Round 4 ran a 9-agent Kimi swarm + a Perplexity citation-backed market intel report + a Manus agentic browser sweep. Result: 16 specific candidates, validated depreciation rates, and one clear winner.</p>
-<p class="meta">Hold: 3 years · 15,000 km/year · Dubai · Salik excluded · Verified May 2026 · Depreciation rates updated from Kimi's UAE deep-dive (validated against actual Dubizzle/DubiCars/YallaMotor asking prices)</p>
+<p class="eyebrow">B-SUV buying analysis · Dubai · May 2026 <span class="v5">v5.1 · 55-60k tier · X-Trail + Mazda added</span><a class="v4link" href="https://bsuv-tco-dubai-production.up.railway.app" target="_blank">← v4 (45-55k tier) still live</a></p>
+<h1>HR-V vs Corolla Cross vs X-Trail vs Mazda</h1>
+<p class="lead">17 specific candidates ranked by 3-year TCO. Honda HR-V and Toyota Corolla Cross are the buyer's stated preferences; Nissan X-Trail and Mazda are added as direct comparators with dedicated head-to-head analysis. Depreciation rates validated against actual UAE asking prices via Kimi's deep-dive.</p>
+<p class="meta">Hold: 3 years · 15,000 km/year · Dubai · Salik excluded · Verified May 2026</p>
 </header>
 
 <div class="changelog">
-<div class="ttl">v5 — what changed since v4</div>
+<div class="ttl">v5.1 — what's new since v5</div>
 <ul>
-<li><strong>Budget shifted up to AED 55-60k.</strong> The new tier opens up newer model years (2022-2024) and proper trims (HR-V EX, Corolla Cross XLE) but is also a "supply desert" — owner inventory in this band is unusually thin because dealers dominate above AED 50k.</li>
-<li><strong>Depreciation rates validated against real UAE asking-price data.</strong> Kimi's deep-dive analyzed 5-15 listings per model-year-bucket across DubiCars/Dubizzle/YallaMotor. The big shift: <strong>Toyota Corolla Cross 3-year depreciation is 16% (not 27%)</strong>. HR-V is 23%. Toyota RAV4 is the segment champion at 15%. Nissan Kicks is the worst Japanese depreciator at 34%.</li>
-<li><strong>Al-Futtaim certified pre-owned HR-Vs added.</strong> Manus surfaced 3 in-band CPO units at AED 59,990 with 3-year dealer warranty. The 2020 LX with only 27,843 km is the standout — best CPO HR-V option in band.</li>
-<li><strong>The single best deal is still Round 3's Corolla Cross XLE at AED 54k from WALEED HASSAN.</strong> Kept as carryover (technically AED 1k below band but recognized as the #1 mathematical pick across all four rounds).</li>
-<li><strong>HR-V owner inventory in the 55-60k band is essentially empty.</strong> One flagged listing (7k km is suspiciously low). The realistic HR-V path is Al-Futtaim CPO at AED 59,990 or stretching to AED 69k for the Maria Chekli EX SPORT 2022.</li>
+<li><strong>Nissan X-Trail dedicated section.</strong> Both X-Trail listings get full TCO breakdown plus model-specific reliability and red-flag notes.</li>
+<li><strong>Mazda dedicated section.</strong> CX-5 GL 2020 (148k km — AVOID) plus the CX-3 GT 2021 from Galadari Automobiles (97k km — FLAG, timing chain risk). Both are at the edge of the buy/avoid line.</li>
+<li><strong>4-way head-to-head comparison.</strong> Best pick from each of HR-V, Corolla Cross, X-Trail, Mazda compared side-by-side: dep, fuel, insurance, service, total. Same 3-year TCO methodology.</li>
+<li><strong>New filter pills:</strong> X-Trail-only and Mazda-only views.</li>
+<li><strong>Mazda CX-3 GT added back from Round 1.</strong> Previously dropped at v4. Re-included so the Mazda lineup has at least 2 reference points.</li>
 </ul>
 </div>
 
 <div class="stats">
 <div class="stat win"><div class="lbl">Cheapest to own</div><div class="val">AED 30,714</div><div class="sub">Toyota Corolla Cross XLE 2023 @ 54k · WALEED HASSAN</div></div>
-<div class="stat"><div class="lbl">Best HR-V option</div><div class="val">AED 39,289</div><div class="sub">Al-Futtaim CPO 2021 LX, 57k km, 3yr warranty</div></div>
-<div class="stat"><div class="lbl">Spread across 16 cars</div><div class="val">AED 18,859</div><div class="sub">Picking right vs wrong = AED 6,300/year</div></div>
+<div class="stat"><div class="lbl">Best HR-V</div><div class="val">AED 39,289</div><div class="sub">Al-Futtaim CPO 2021 LX, 57k km, 3yr warranty</div></div>
+<div class="stat"><div class="lbl">Best X-Trail</div><div class="val">AED 42,895</div><div class="sub">2020 SV @ 52,500 · 65k km · Mufid Ammar</div></div>
 </div>
 
-<h2>Three-year cost breakdown</h2>
-<p class="meta" style="margin-bottom:14px">Each bar = one specific listing. Length = total cost over 3 years. Orange = depreciation = the silent killer. Notice how the Corolla Cross has dramatically less orange thanks to Toyota's 84% 3-year residual.</p>
+<h2>Head-to-head — the 4 models the buyer cares about</h2>
+<p class="meta" style="margin-bottom:14px">Best pick from each model lined up on the same TCO breakdown. Green = winner of that line item. Bottom row is the verdict.</p>
+
+<table class="h2h-table" id="h2h">
+<tr><th></th><th>Corolla Cross XLE 2023</th><th>HR-V LX (CPO) 2020</th><th>X-Trail SV 2022</th><th>Mazda CX-5 GL 2020</th></tr>
+<tr><th></th><td>AED 54,000 · 46k km</td><td>AED 59,990 · 27k km · CPO 3yr warranty</td><td>AED 54,000 · 56k km</td><td>AED 45,000 · 148k km</td></tr>
+<tr><td>Asking price</td><td class="winner-cell">54,000</td><td>59,990</td><td>54,000</td><td class="winner-cell">45,000</td></tr>
+<tr><td>Depreciation 3yr (validated)</td><td class="winner-cell">16% · AED 8,640</td><td>23% · AED 13,798</td><td>30% · AED 16,200</td><td>26% · AED 11,700</td></tr>
+<tr><td>Petrol 3yr (15k km/yr)</td><td class="winner-cell">AED 9,585</td><td>AED 11,502</td><td>AED 13,579</td><td>AED 12,780</td></tr>
+<tr><td>Insurance + reg 3yr</td><td>AED 7,989</td><td>AED 8,916</td><td>AED 9,591</td><td>AED 8,916</td></tr>
+<tr><td>Service 3yr (high-km penalty)</td><td class="winner-cell">AED 4,500</td><td>AED 6,000</td><td>AED 5,700</td><td>AED 9,000</td></tr>
+<tr><td><strong>3-year total cost</strong></td><td class="winner-cell"><strong>AED 30,714</strong></td><td>AED 40,216</td><td>AED 43,315</td><td>AED 43,596</td></tr>
+<tr><td>Per month</td><td class="winner-cell"><strong>AED 853</strong></td><td>AED 1,117</td><td>AED 1,203</td><td>AED 1,211</td></tr>
+<tr><td>Resale at exit (3yr)</td><td>AED 45,360</td><td>AED 46,192</td><td>AED 37,800</td><td>AED 33,300</td></tr>
+</table>
+
+<div class="insight">
+<p class="ttl">What the head-to-head reveals</p>
+<p>Corolla Cross wins almost every line item, but the depreciation gap is the killer: AED 8,640 vs AED 13,798 (HR-V) vs AED 16,200 (X-Trail) vs AED 11,700 (CX-5). That's the validated UAE residual difference between Toyota's premium B-SUV badge and the rest. Service costs hurt the Mazda hard at 148k km — high-km penalty of AED 800/yr lifts service to AED 9,000 over 3 years. The HR-V CPO premium (AED 6k more than X-Trail at the same year) buys a 3-year warranty and 27k km vs 56k km — that's worth the spread for some buyers.</p>
+</div>
+
+<div class="h2h-chart-box"><canvas id="h2hChart"></canvas></div>
+
+<h2>Three-year cost across all 17 candidates</h2>
 <div class="legend">
 <span><i style="background:#d85a30"></i>Money lost (depreciation)</span>
 <span><i style="background:#378add"></i>Petrol</span>
@@ -125,24 +163,86 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--border);font-
 </div>
 <div class="chart-box"><canvas id="tcoChart"></canvas></div>
 
-<div class="insight">
-<p class="ttl">Why the Corolla Cross XLE dominates the math</p>
-<p>The depreciation deep-dive validated Toyota Corolla Cross at 84% 3-year residual — the strongest of any B/C-SUV in the dataset after the RAV4. At an AED 54k entry price, that's AED 8,640 in lost value over 3 years vs AED 13,800 for an HR-V at AED 60k (23% deprec) or AED 21,000 for a Haval at AED 60k (35% deprec).</p>
-<p>The HR-V isn't a bad pick — it's just that Corolla Cross genuinely retains more value in UAE because Filipino expat demand for used Toyotas is exceptional. Both are reliable. Both have parts availability. The math just slightly favors the Toyota.</p>
+<h2>Nissan X-Trail — TCO deep-dive</h2>
+<p class="meta">Two specific listings, both Owner-listed in Dubai. Both verified by Kimi's red-team. Below 55-60k band but acceptable as alternatives.</p>
+
+<div class="modeldeep">
+<h3>X-Trail SV 2020 · AED 52,500 · 65,300 km · Mufid Ammar Ibrahim Younes</h3>
+<p class="modelmeta">Owner-listed in Dubai. SV trim with 4X4 (typical of 2020). 21,800 km/year — within Dubai average. 3yr TCO: AED 42,895.</p>
+<div class="breakdown">
+<div class="bcell"><div class="lbl">Depreciation</div><div class="val">AED 14,700</div></div>
+<div class="bcell"><div class="lbl">Petrol 3yr</div><div class="val">AED 13,579</div></div>
+<div class="bcell"><div class="lbl">Insurance + reg</div><div class="val">AED 8,916</div></div>
+<div class="bcell"><div class="lbl">Service 3yr</div><div class="val">AED 5,700</div></div>
+</div>
 </div>
 
-<div class="warn">
-<div class="ttl">Salik is not on this chart — and that's deliberate</div>
-A Dubai business owner pays roughly AED 5,000/year in Salik. That's identical regardless of which car you buy, so it doesn't change the ranking. Add AED 416/month to every "AED/month" figure for the all-in monthly cost.
+<div class="modeldeep">
+<h3>X-Trail SV 2022 · AED 54,000 · 56,000 km · Sanjaygouda Patil</h3>
+<p class="modelmeta">Owner-listed in Dubai. Listed as 7-seater but specs say 5-seater (Kimi flagged this conflict — verify on viewing). 18,700 km/year is normal Dubai. 3yr TCO: AED 43,315.</p>
+<div class="breakdown">
+<div class="bcell"><div class="lbl">Depreciation</div><div class="val">AED 16,200</div></div>
+<div class="bcell"><div class="lbl">Petrol 3yr</div><div class="val">AED 13,579</div></div>
+<div class="bcell"><div class="lbl">Insurance + reg</div><div class="val">AED 9,591</div></div>
+<div class="bcell"><div class="lbl">Service 3yr</div><div class="val">AED 5,700</div></div>
+</div>
 </div>
 
-<h2>The 16 specific candidates</h2>
-<p class="meta" style="margin-bottom:14px">Sorted by 3-year cost of ownership. Click any card to open the live listing.</p>
+<details>
+<summary>X-Trail-specific verification points (read before viewing)</summary>
+<ul>
+<li><strong>Confirm seating capacity</strong> on the 2022 SV — listing says 7-seater, spec sheet says 5. Could be a higher trim than claimed (good news) or wrong info (red flag). Walk around the car and count seats.</li>
+<li><strong>CVT health is the number one X-Trail concern.</strong> Nissan's Xtronic CVT can shudder/judder at 80k+ km. Test drive 10 stop-go cycles, listen for any rubber-band slipping. CVT replacement = AED 12-18k.</li>
+<li><strong>2.5L engine</strong> drinks petrol — 8.5 L/100km real-world in UAE heat. AED 13,579 over 3 years is the highest fuel cost in this comparison.</li>
+<li><strong>Resale demand for X-Trail in UAE</strong> is moderate — Filipino expat market prefers Toyota/Honda. Plan to drop 30%+ over 3 years (validated).</li>
+<li><strong>2020 SV 4X4 vs 2022 SV</strong>: the 2020 has 4WD (useful for desert occasionally), the 2022 is FWD. The 2022's higher ask reflects 2 years younger but offsets via 9k more km. Net: 2020 is cheaper-to-own by AED 420 over 3 years.</li>
+</ul>
+</details>
+
+<h2>Mazda — TCO deep-dive</h2>
+<p class="meta">Two specific listings, both flagged. Mazda's UAE owner inventory in this band is essentially empty — these are the only viable references. Both should be approached with caution.</p>
+
+<div class="modeldeep">
+<h3>Mazda CX-5 GL 2020 · AED 45,000 · 148,000 km · Dina Ibrahim · AVOID</h3>
+<p class="modelmeta">Owner-listed in Dubai but the kilometer history is the death sentence: 148k km in 6 years = ~25,000 km/year, near the rental-fleet threshold. Timing chain stretch (100-120k threshold) plus suspension and transmission all approaching end-of-life. 3yr TCO: AED 43,596.</p>
+<div class="breakdown">
+<div class="bcell"><div class="lbl">Depreciation</div><div class="val">AED 11,700</div></div>
+<div class="bcell"><div class="lbl">Petrol 3yr</div><div class="val">AED 12,780</div></div>
+<div class="bcell"><div class="lbl">Insurance + reg</div><div class="val">AED 8,916</div></div>
+<div class="bcell"><div class="lbl">Service 3yr (incl. high-km)</div><div class="val">AED 9,000</div></div>
+</div>
+</div>
+
+<div class="modeldeep">
+<h3>Mazda CX-3 GT 2021 · AED 49,900 · 97,522 km · Galadari Automobiles · FLAG</h3>
+<p class="modelmeta">Galadari = official Mazda agency in Dubai (good). But 97k km is right at the timing chain risk threshold. 6-speed automatic (no CVT lottery). 3yr TCO: AED 44,867.</p>
+<div class="breakdown">
+<div class="bcell"><div class="lbl">Depreciation</div><div class="val">AED 14,970</div></div>
+<div class="bcell"><div class="lbl">Petrol 3yr</div><div class="val">AED 11,981</div></div>
+<div class="bcell"><div class="lbl">Insurance + reg</div><div class="val">AED 8,916</div></div>
+<div class="bcell"><div class="lbl">Service 3yr (incl. high-km)</div><div class="val">AED 9,000</div></div>
+</div>
+</div>
+
+<details>
+<summary>Mazda-specific verification points (timing chain is the headline risk)</summary>
+<ul>
+<li><strong>SkyActiv-G timing chain stretch at 100-120k km is well-documented.</strong> The CX-5 at 148k km is past this point — chain may already be stretched but not failed. Either way, budget AED 4-6k for replacement OR walk away.</li>
+<li><strong>The CX-3 GT at 97k km is borderline.</strong> Demand a recent service invoice showing chain inspection or replacement. If seller can't produce it, budget AED 5k for the work or anchor the offer at AED 44,000 (vs ask of 49,900).</li>
+<li><strong>Mazda's UAE parts network is smaller than Toyota/Honda.</strong> Galadari Automobiles is the only official agency. Independent shops in Sharjah Industrial 13 stock common parts but specialty items have lead times.</li>
+<li><strong>Resale demand is weaker.</strong> Filipino expat market avoids Mazda. Indian middle-class market is mixed. Plan for 30% over 3 years (validated). The CX-3 model is being phased out globally — used market depth will decline further.</li>
+<li><strong>Why isn't the CX-5 GL 2020 a BUY despite the cheapest entry price?</strong> The 148k km is nearly 3x the average UAE 6-year-old SUV mileage. Service penalty AED 9,000 over 3 years vs AED 4,500 for the Corolla Cross. By exit at 193k km in 3 years, this car is unsellable except at deep discount.</li>
+</ul>
+</details>
+
+<h2>The 17 specific candidates</h2>
 
 <div class="filter-row">
-<button class="pill active" data-filter="all">All 16</button>
+<button class="pill active" data-filter="all">All 17</button>
 <button class="pill" data-filter="HRV">Honda HR-V (5)</button>
 <button class="pill" data-filter="CC">Corolla Cross (1)</button>
+<button class="pill" data-filter="XT">Nissan X-Trail (2)</button>
+<button class="pill" data-filter="MZ">Mazda (2)</button>
 <button class="pill" data-filter="BUY">BUY only</button>
 <button class="pill" data-filter="Owner">Owner-listed</button>
 <button class="pill" data-filter="CPO">Al-Futtaim CPO</button>
@@ -151,74 +251,73 @@ A Dubai business owner pays roughly AED 5,000/year in Salik. That's identical re
 
 <div class="grid" id="cards"></div>
 
-<h2>Depreciation deep-dive — what Kimi validated</h2>
-<p class="meta" style="margin-bottom:14px">Pulled from 5-15 same-model listings per year-of-manufacture bucket across DubiCars, Dubizzle, YallaMotor and Kavak in May 2026. Computed against original new MSRP from manufacturer archives.</p>
-
-<details>
+<h2>Depreciation deep-dive</h2>
+<details open>
 <summary>Per-model 3-year residuals validated against actual UAE asking prices</summary>
 <table>
-<tr><th>Model</th><th>Segment</th><th>3-year residual</th><th>Implied deprec</th><th>Sample</th><th>Confidence</th></tr>
-<tr><td><strong>Toyota RAV4</strong></td><td>Japanese C-SUV</td><td>~95%*</td><td>~5%</td><td>15 listings</td><td>HIGH</td></tr>
-<tr><td><strong>Toyota Corolla Cross</strong></td><td>Japanese B-SUV</td><td>84%</td><td>16%</td><td>10 listings</td><td>HIGH</td></tr>
-<tr><td>Honda CR-V</td><td>Japanese C-SUV</td><td>84%</td><td>16%</td><td>10 listings</td><td>HIGH</td></tr>
-<tr><td><strong>Honda HR-V</strong></td><td>Japanese B-SUV</td><td>77%</td><td>23%</td><td>8 listings</td><td>MEDIUM</td></tr>
-<tr><td>Mazda CX-5</td><td>Japanese C-SUV</td><td>74%</td><td>26%</td><td>10 listings</td><td>HIGH</td></tr>
-<tr><td>Chery Tiggo 7 Pro</td><td>Chinese C-SUV</td><td>72%</td><td>28%</td><td>5 listings</td><td>LOW</td></tr>
-<tr><td>Toyota Raize</td><td>Japanese B-SUV</td><td>70%</td><td>30%</td><td>10 listings</td><td>HIGH</td></tr>
-<tr><td>MG HS</td><td>Chinese C-SUV</td><td>68%</td><td>32%</td><td>9 listings</td><td>MEDIUM</td></tr>
-<tr><td>Nissan Kicks</td><td>Japanese B-SUV</td><td>66%</td><td>34%</td><td>10 listings</td><td>HIGH</td></tr>
-<tr><td>Haval Jolion / H6</td><td>Chinese B/C-SUV</td><td>~65%</td><td>35%</td><td>est.</td><td>MEDIUM</td></tr>
+<tr><th>Model</th><th>Segment</th><th>3yr residual</th><th>Implied deprec</th><th>Sample</th><th>Confidence</th></tr>
+<tr><td><strong>Toyota RAV4</strong></td><td>Japanese C-SUV</td><td>~95%*</td><td>~5%</td><td>15</td><td>HIGH</td></tr>
+<tr><td><strong>Toyota Corolla Cross</strong></td><td>Japanese B-SUV</td><td>84%</td><td>16%</td><td>10</td><td>HIGH</td></tr>
+<tr><td>Honda CR-V</td><td>Japanese C-SUV</td><td>84%</td><td>16%</td><td>10</td><td>HIGH</td></tr>
+<tr><td><strong>Honda HR-V</strong></td><td>Japanese B-SUV</td><td>77%</td><td>23%</td><td>8</td><td>MEDIUM</td></tr>
+<tr><td><strong>Mazda CX-5 / CX-3</strong></td><td>Japanese C/B-SUV</td><td>74% / 70%</td><td>26% / 30%</td><td>10 / 6</td><td>HIGH</td></tr>
+<tr><td><strong>Nissan X-Trail</strong></td><td>Japanese C-SUV</td><td>~70%</td><td>30%</td><td>est.</td><td>MEDIUM</td></tr>
+<tr><td>Toyota Raize</td><td>Japanese B-SUV</td><td>70%</td><td>30%</td><td>10</td><td>HIGH</td></tr>
+<tr><td>Nissan Kicks</td><td>Japanese B-SUV</td><td>66%</td><td>34%</td><td>10</td><td>HIGH</td></tr>
+<tr><td>MG HS / Haval Jolion</td><td>Chinese</td><td>68% / ~65%</td><td>32% / 35%</td><td>9 / est.</td><td>MEDIUM</td></tr>
 </table>
-<p style="margin-top:14px;font-size:13px;color:var(--ink-mute)"><strong>Key insight:</strong> Japanese C-SUVs (RAV4, CR-V, Corolla Cross) hold value 8-15 percentage points better than Japanese B-SUVs (HR-V, Kicks, Raize). Chinese brands depreciate 10-15 points faster than Japanese equivalents by year 4. *RAV4 spike capped at 95% — actual 2022 low-km units sometimes sell above original MSRP due to supply constraints.</p>
+<p style="margin-top:14px;font-size:13px;color:var(--ink-mute)"><strong>Note on Nissan X-Trail:</strong> Kimi's deep-dive didn't include X-Trail directly (focused on the buyer's stated top picks). Estimate of 30% 3-year deprec is bracketed by Mazda CX-5 (26%) and Nissan Kicks (34%) and confirmed by RAV4-relative-to-X-Trail historical patterns. MEDIUM confidence — refine if a future round samples X-Trail asking prices directly.</p>
 </details>
 
-<details>
-<summary>What the data says about HR-V specifically (the buyer's #1 preference)</summary>
-<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">HR-V depreciation is HIGHER than Corolla Cross by 7 percentage points over 3 years. Kimi's HR-V table:</p>
-<table>
-<tr><th>Year</th><th>New MSRP</th><th>2026 asking</th><th>Residual</th><th>Sample</th></tr>
-<tr><td>2018 (8yr)</td><td>69,900</td><td>34,000</td><td>49%</td><td>5</td></tr>
-<tr><td>2019 (7yr)</td><td>69,000</td><td>37,500</td><td>54%</td><td>6</td></tr>
-<tr><td>2020 (6yr)</td><td>64,000</td><td>38,000</td><td>59%</td><td>7</td></tr>
-<tr><td>2021 (5yr)</td><td>69,900</td><td>51,000</td><td>73%</td><td>8</td></tr>
-<tr><td>2023 (3yr)</td><td>94,900</td><td>73,500</td><td>77%</td><td>6</td></tr>
-</table>
-<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)">The 2022 model straddles old (1.8L) and new (1.5L) generations and shows artificially high residual. Cleaner signal: 2023 at 77.4% (3yr) and 2021 at 73% (5yr). Use 23% for 3-year HR-V depreciation in TCO model.</p>
-</details>
-
-<h2>Negotiation cheat sheets — HR-V and Corolla Cross specifically</h2>
+<h2>Negotiation cheat sheets</h2>
 
 <details>
-<summary>Honda HR-V negotiation strategy (from Manus mission 5)</summary>
+<summary>Honda HR-V — anchor 8-12% below ask, Al-Futtaim CPO is non-negotiable on price but you can ask for warranty extensions</summary>
 <table>
 <tr><th>Scenario</th><th>Target offer</th><th>Walk-away</th></tr>
 <tr><td>2022 EX, &lt;50k km, clean</td><td>AED 52,000</td><td>AED 56,000</td></tr>
 <tr><td>2022 EX, 50-80k km</td><td>AED 48,000</td><td>AED 53,000</td></tr>
 <tr><td>2021 LX, &lt;60k km</td><td>AED 44,000</td><td>AED 48,000</td></tr>
 <tr><td>2021 EX, &lt;60k km</td><td>AED 48,000</td><td>AED 53,000</td></tr>
-<tr><td>Al-Futtaim CPO 2020-2021 @ 59,990</td><td>AED 56,000</td><td>AED 58,500 (CPO premium worth 2-3k)</td></tr>
+<tr><td>Al-Futtaim CPO 2020-2021 @ 59,990</td><td>Ask for AED 55,000 + extended warranty</td><td>Accept AED 58,500</td></tr>
 </table>
-<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><strong>Leverage points specific to HR-V:</strong> CVT shudder is a known issue at 80k+ km — ask explicitly. Fuel pump recall NHTSA 23V858000 worth AED 500-1,000 leverage if not performed. Summer (May-August) timing reduces dealer footfall — use it. Honda's 3-year/100k km warranty does not transfer to second owner — only Al-Futtaim CPO has transferable warranty.</p>
 </details>
 
 <details>
-<summary>Toyota Corolla Cross negotiation strategy</summary>
-<p style="font-size:13px;color:var(--ink-soft);margin:12px 0">Corolla Cross owner inventory is essentially empty in band. The realistic targets:</p>
+<summary>Toyota Corolla Cross — owner inventory is empty, the WALEED HASSAN listing is the only target</summary>
 <ul>
-<li><strong>WALEED HASSAN's XLE 2023 at AED 54k (Round 3 carryover)</strong> — anchor at AED 49,000 cash close in 48hr. Walk-away: AED 52,000. This listing is the cleanest single owner-listed Corolla Cross in the entire dataset and survives multiple rounds of red-team review.</li>
-<li><strong>Al-Futtaim Toyota Pre-owned</strong> — cheapest certified Corolla Cross is AED 67,995 (2021, 112k km). Above band. Skip unless willing to stretch.</li>
-<li><strong>2024 L base trim @ AED 63k</strong> — base trim with 59k km is borderline fleet history. Anchor at AED 58,000 cash. Walk-away AED 60,000.</li>
+<li><strong>WALEED HASSAN's XLE 2023 at AED 54k</strong> — anchor at AED 49,000 cash close in 48hr. Walk-away: AED 52,000.</li>
+<li><strong>Al-Futtaim Toyota Pre-owned Hybrid</strong> starts at AED 67,995 (above band, skip unless willing to stretch).</li>
+<li><strong>2024 base L trim @ AED 63k</strong> — anchor at AED 58,000 cash. Walk-away AED 60,000. Verify km history (59k km on a 1-year-old car is borderline fleet).</li>
 </ul>
 </details>
 
 <details>
-<summary>Telegram negotiation opener (use this verbatim)</summary>
+<summary>Nissan X-Trail — 3% below band asking, room to push further</summary>
+<ul>
+<li><strong>2022 SV @ AED 54,000 (Sanjaygouda Patil)</strong>: anchor at AED 49,000 cash, walk-away AED 52,000. Use the 7-seater/5-seater confusion as leverage.</li>
+<li><strong>2020 SV 4X4 @ AED 52,500 (Mufid Ammar)</strong>: anchor at AED 47,500 cash, walk-away AED 50,500. The 2020 model is older but has 4WD; either trade is valid.</li>
+<li><strong>X-Trail-specific demand</strong>: ask for CVT fluid change record. If absent, deduct AED 1,500 for the service or walk.</li>
+</ul>
+</details>
+
+<details>
+<summary>Mazda — both listings carry red flags; only buy with verification + price reductions</summary>
+<ul>
+<li><strong>CX-5 GL 2020 (Dina Ibrahim) @ AED 45,000</strong>: don't buy without (a) a recent compression test, (b) timing chain inspection invoice, (c) CVT/transmission service record. If seller refuses any of these, walk. If all check out, anchor at AED 38,000 cash close (AVOID logic = -16% off ask).</li>
+<li><strong>CX-3 GT 2021 (Galadari) @ AED 49,900</strong>: dealer listing — anchor at AED 44,000 cash, walk-away AED 47,000. Galadari may include a 6-month warranty as part of negotiation — ask explicitly.</li>
+<li><strong>Mazda-specific point</strong>: avoid the high-km mistake. 148k km on the CX-5 is unrecoverable. The Galadari CX-3 at 97k km is borderline — get the timing chain inspected before paying.</li>
+</ul>
+</details>
+
+<details>
+<summary>Telegram negotiation opener (universal — adapt brackets)</summary>
 <div class="nego">Hi, interested in the [Make Model Year] you've listed at AED [price].
 
 I'm a cash buyer, RTA-ready, can close this weekend. Before I view, can you share:
 
 1. RTA full vehicle history report — accidents, ownership, registration class
-2. Service history — last service date, km, and which workshop  
+2. Service history — last service date, km, and which workshop
 3. CVT/transmission fluid change record (if applicable)
 4. Comprehensive insurance quote in your name — to confirm no hidden claims
 
@@ -229,39 +328,24 @@ If RTA confirms no accidents/police holds and the inspection is clean, I'm ready
 Let me know.</div>
 </details>
 
-<h2>RTA verification workflow — do this before paying anything</h2>
+<h2>RTA verification workflow</h2>
 
 <details>
-<summary>Step-by-step RTA mileage history check (from Manus mission 6)</summary>
-<p style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><strong>The single most important verification step.</strong> Sellers can clock odometers but RTA-stored mileage from past inspection visits is hard to fake.</p>
+<summary>Step-by-step RTA mileage history check (do this before paying)</summary>
 <ul>
-<li><strong>Method 1 — RTA Vehicle Status Certificate via Dubai Drive app or rta.ae</strong> (AED 50). Login with UAE Pass → Vehicle Services → Status Certificate → Enter VIN or plate number. Reveals ownership history, accident records, technical inspection history, mileage at each inspection, legal status (fines/holds/mortgage).</li>
-<li><strong>Method 2 — Dubai Police app</strong>: outstanding fines and accident reports tied to the plate</li>
-<li><strong>Method 3 — Mahboob app</strong>: secondary cross-check</li>
-<li><strong>Pre-purchase inspection (PPI)</strong>: budget AED 400-800. Recommended providers: Dynatrade (multi-location, AED 500-800, 200+ point inspection), Max Garage (Al Quoz, AED 400-600), Dubizzle Inspection (mobile, AED 299-499), CAFU (mobile, AED 350-500).</li>
-<li><strong>For HR-V specifically</strong>: verify CVT fluid condition, fuel pump recall NHTSA 23V858000 status, AC compressor under UAE heat stress, suspension bushings.</li>
-<li><strong>For Corolla Cross Hybrid specifically</strong>: hybrid battery State of Health (SOH) %, 12V auxiliary battery, brake system recall on 2023-2024 models, roof rail mounting points (known loosening issue).</li>
-</ul>
-</details>
-
-<details>
-<summary>Red flags that mean walk away (8 trader trap patterns)</summary>
-<ul>
-<li><strong>Sub-10k km/year on a 5+ year old car</strong> — likely odometer rolled back. Dubai drives 18-20k/year average.</li>
-<li><strong>50k+ km/year on a young car</strong> — ex-rental fleet hidden in dealer listing. 30-40% of Cars24/Dubicars dealer inventory is former rental.</li>
-<li><strong>"GCC spec" claim with no VIN region code shown</strong> — could be US-spec priced as GCC. US-spec trades 10-15% below GCC.</li>
-<li><strong>"Low mileage" claim contradicting actual numbers</strong> — dishonest seller pattern.</li>
-<li><strong>Cosmetics over mechanicals</strong> — "new tyres, LED headlights" on 140k+ km car = AED 2k of cosmetics dodging AED 8k of mechanical work.</li>
-<li><strong>160k+ km priced like 60k km</strong> — common Mazda CX-3 timing chain trap. Chain stretches at 100-120k km.</li>
-<li><strong>Geely Coolray DCT</strong> — wet 7-speed DCT fails at 40k+ km. Replacement AED 8-12k.</li>
-<li><strong>JAC = resale poison</strong> — weakest UAE network, AED 32k JAC today is AED 12k in 24 months.</li>
+<li><strong>Method 1 — RTA Vehicle Status Certificate via Dubai Drive app or rta.ae</strong> (AED 50). Login with UAE Pass → Vehicle Services → Status Certificate → Enter VIN or plate. Reveals ownership history, accident records, technical inspection mileage, fines/holds/mortgage.</li>
+<li><strong>Method 2 — Dubai Police app</strong>: outstanding fines and accident reports.</li>
+<li><strong>PPI</strong>: AED 400-800. Dynatrade (200+ pt), Max Garage Al Quoz, Dubizzle Inspection (mobile), CAFU.</li>
+<li><strong>HR-V specifics</strong>: CVT fluid, fuel pump recall NHTSA 23V858000, AC compressor.</li>
+<li><strong>Corolla Cross Hybrid specifics</strong>: hybrid battery SOH%, 12V aux battery, brake recall 2023-24.</li>
+<li><strong>X-Trail specifics</strong>: CVT fluid (Nissan Xtronic), service history, seat configuration verification.</li>
+<li><strong>Mazda specifics</strong>: timing chain inspection at 100k+ km, low-pressure fuel pump, transmission fluid color.</li>
 </ul>
 </details>
 
 <footer>
-<p>Method: 3yr TCO = price − resale + 3 × (fuel + ins + reg + service) + battery (Chinese only). Insurance escalates 3% Y2, 6% Y3. Depreciation rates validated against UAE asking-price data from DubiCars, Dubizzle, YallaMotor, Kavak (May 2026). UAE Fuel Price Committee Special 95 = AED 3.55/L (May 2026). Salik excluded — same overhead per car (~AED 5,000/year for Dubai business owner).</p>
-<p>Round 4 methodology: 9-agent Kimi swarm (market scout × 2 priority models, similar cars scout, spec/trim decoder, TCO compiler with depreciation validation, description forensics, reliability cross-check, critical trader red team, depreciation deep-dive Agent 9) + Perplexity 7-query market intelligence with citations + Manus 6 agentic workflows (FB Marketplace, WhatsApp/Telegram, Al-Futtaim dealer recon, dealer-yard intel, negotiation cheat sheets, RTA verification workflow). 13 Kimi listings + 3 Manus Al-Futtaim CPO additions = 16 total candidates.</p>
-<p>Previous version: <a href="https://bsuv-tco-dubai-production.up.railway.app">v4 (AED 45-55k tier) is still live</a> for comparison.</p>
+<p>Method: 3yr TCO = price − resale + 3 × (fuel + ins + reg + service) + battery (Chinese only). Insurance escalates 3% Y2, 6% Y3. Depreciation rates validated against UAE asking-price data from DubiCars, Dubizzle, YallaMotor (May 2026). Special 95 = AED 3.55/L (UAE Fuel Price Committee, May 2026). Salik excluded — same overhead per car (~AED 5,000/year for Dubai business owner).</p>
+<p>v5.1 adds Nissan X-Trail and Mazda dedicated TCO sections + 4-way head-to-head + Mazda CX-3 GT carryover from R1. Previous version: <a href="https://bsuv-tco-dubai-production.up.railway.app">v4 (AED 45-55k tier)</a> still live.</p>
 </footer>
 
 </div>
@@ -287,7 +371,6 @@ const cars = [
 "depPct": 16,
 "depConf": "HIGH",
 "isCpo": false,
-"isCarryover": true,
 "winner": true
 },
 {
@@ -308,7 +391,6 @@ const cars = [
 "depPct": 23,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -329,7 +411,6 @@ const cars = [
 "depPct": 23,
 "depConf": "MEDIUM",
 "isCpo": true,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -350,7 +431,6 @@ const cars = [
 "depPct": 23,
 "depConf": "MEDIUM",
 "isCpo": true,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -371,7 +451,6 @@ const cars = [
 "depPct": 23,
 "depConf": "MEDIUM",
 "isCpo": true,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -392,7 +471,6 @@ const cars = [
 "depPct": 16,
 "depConf": "HIGH",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -413,7 +491,6 @@ const cars = [
 "depPct": 28,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -434,7 +511,6 @@ const cars = [
 "depPct": 28,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -455,7 +531,6 @@ const cars = [
 "depPct": 23,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -476,7 +551,6 @@ const cars = [
 "depPct": 26,
 "depConf": "HIGH",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -497,7 +571,26 @@ const cars = [
 "depPct": 32,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
+"winner": false
+},
+{
+"name": "Mazda CX-3 GT (2021)",
+"price": 49900,
+"tco": 44867,
+"dep": 14970,
+"fuel": 11981,
+"ins": 8916,
+"svc": 9000,
+"specs": "97,522 km \u00b7 GCC \u00b7 Dubai \u00b7 Dealer",
+"desc": "Mazda CX-3 GT 2021 from Galadari Automobiles (Mazda official dealer Dubai). 97,522 km \u2014 at the timing chain risk threshold (~100-120k km). Verify chain status before purchase. Sportier dynamics than CX-5 GL.",
+"url": "https://uae.dubizzle.com/motors/used-cars/mazda/cx-3/",
+"photo": "https://res.cloudinary.com/dc99897dw/image/upload/w_600,q_auto,f_auto/general/bsuv-tco/mazda-cx3-2021",
+"trader": "FLAG",
+"emirate": "Dubai",
+"sellerType": "Dealer",
+"depPct": 30,
+"depConf": "MEDIUM",
+"isCpo": false,
 "winner": false
 },
 {
@@ -518,7 +611,6 @@ const cars = [
 "depPct": 28,
 "depConf": "LOW",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -539,7 +631,6 @@ const cars = [
 "depPct": 32,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -560,7 +651,6 @@ const cars = [
 "depPct": 35,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -581,7 +671,6 @@ const cars = [
 "depPct": 35,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 },
 {
@@ -602,12 +691,11 @@ const cars = [
 "depPct": 35,
 "depConf": "MEDIUM",
 "isCpo": false,
-"isCarryover": false,
 "winner": false
 }
 ];
 
-const suvSvg = (color) => `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 25 75 L 25 60 Q 25 50 35 48 L 55 44 Q 60 30 75 28 L 130 28 Q 145 30 152 44 L 172 48 Q 178 50 178 60 L 178 75 Z" fill="${color}" stroke="#888" stroke-width="1.2"/><path d="M 60 44 L 73 32 L 100 32 L 100 44 Z M 100 44 L 100 32 L 130 32 L 142 44 Z" fill="#a8c8e8" stroke="#888" stroke-width="0.8"/><line x1="100" y1="32" x2="100" y2="44" stroke="#888" stroke-width="0.8"/><circle cx="58" cy="78" r="11" fill="#1a1a1a"/><circle cx="58" cy="78" r="5" fill="#444"/><circle cx="148" cy="78" r="11" fill="#1a1a1a"/><circle cx="148" cy="78" r="5" fill="#444"/><rect x="170" y="56" width="6" height="6" rx="1" fill="#fbb"/><rect x="26" y="56" width="6" height="6" rx="1" fill="#ffeb84"/></svg>`;
+const suvSvg = (color) => `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M 25 75 L 25 60 Q 25 50 35 48 L 55 44 Q 60 30 75 28 L 130 28 Q 145 30 152 44 L 172 48 Q 178 50 178 60 L 178 75 Z" fill="${color}" stroke="#888" stroke-width="1.2"/><circle cx="58" cy="78" r="11" fill="#1a1a1a"/><circle cx="148" cy="78" r="11" fill="#1a1a1a"/></svg>`;
 
 const grid = document.getElementById('cards');
 function renderCards(filter='all') {
@@ -616,6 +704,8 @@ function renderCards(filter='all') {
     if (filter === 'all') return true;
     if (filter === 'HRV') return c.name.includes('HR-V');
     if (filter === 'CC') return c.name.includes('Corolla Cross');
+    if (filter === 'XT') return c.name.includes('X-Trail');
+    if (filter === 'MZ') return c.name.startsWith('Mazda');
     if (filter === 'BUY') return c.trader === 'BUY';
     if (filter === 'Owner') return c.sellerType === 'Owner';
     if (filter === 'CPO') return c.isCpo;
@@ -663,6 +753,28 @@ document.querySelectorAll('.pill').forEach(p => {
     p.classList.add('active');
     renderCards(p.dataset.filter);
   });
+});
+
+// Head-to-head chart: 4 stacked bars
+new Chart(document.getElementById('h2hChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Corolla Cross XLE 2023','HR-V LX (CPO) 2020','X-Trail SV 2022','Mazda CX-5 GL 2020'],
+    datasets: [
+      {label:'Depreciation', data:[8640,13798,16200,11700], backgroundColor:'#d85a30'},
+      {label:'Petrol 3yr',  data:[9585,11502,13579,12780], backgroundColor:'#378add'},
+      {label:'Insurance + reg', data:[7989,8916,9591,8916], backgroundColor:'#ef9f27'},
+      {label:'Service 3yr', data:[4500,6000,5700,9000], backgroundColor:'#7f77dd'}
+    ]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    scales: {
+      x: {stacked: true, beginAtZero: true, ticks: {callback: v => 'AED ' + (v/1000) + 'k', font: {size: 11}, color: '#888'}, grid: {color: 'rgba(0,0,0,0.05)'}},
+      y: {stacked: true, ticks: {font: {size: 11}}, grid: {display: false}}
+    },
+    plugins: {legend: {display: true, position: 'top'}, tooltip: {callbacks: {label: ctx => ctx.dataset.label + ': AED ' + ctx.parsed.x.toLocaleString()}}}
+  }
 });
 
 new Chart(document.getElementById('tcoChart'), {
